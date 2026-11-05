@@ -1,0 +1,394 @@
+{
+  "info": {
+    "name": "CampusHub - Avance 1 - Semana 13",
+    "description": "Ejecutar en orden contra los datos de muestra. Crea registros temporales y elimina únicamente los IDs que acaba de crear. PATCH del laboratorio es una prueba técnica del quinto método de la rúbrica; aprobar/rechazar reservas se implementa en el avance 3. json-server no valida negocio ni autenticación.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "laboratorioCreadoId",
+      "value": "NO_CREADO",
+      "type": "string"
+    },
+    {
+      "key": "reservaCreadaId",
+      "value": "NO_CREADA",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - GET catálogo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Es una lista', () => pm.expect(pm.response.json()).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios"
+      },
+      "response": []
+    },
+    {
+      "name": "02 - GET filtro por sede",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Sede correcta', () => pm.response.json().forEach(l => pm.expect(l.sede).to.eql('Lima Centro')));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios?sede=Lima%20Centro"
+      },
+      "response": []
+    },
+    {
+      "name": "03 - GET búsqueda q",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios?q=Arduino"
+      },
+      "response": []
+    },
+    {
+      "name": "04 - GET detalle",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios/1"
+      },
+      "response": []
+    },
+    {
+      "name": "05 - POST laboratorio temporal",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('laboratorioCreadoId', String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Lab Postman\",\n  \"sede\": \"Lima Centro\",\n  \"capacidad\": 25,\n  \"equipos\": [\n    \"PC i7\",\n    \"Proyector\"\n  ],\n  \"estado\": \"disponible\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 - PUT laboratorio temporal",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Capacidad editada', () => pm.expect(pm.response.json().capacidad).to.eql(40));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios/{{laboratorioCreadoId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Lab Postman\",\n  \"sede\": \"Lima Centro\",\n  \"capacidad\": 40,\n  \"equipos\": [\n    \"PC i7\",\n    \"Proyector\"\n  ],\n  \"estado\": \"disponible\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 - PATCH diagnóstico del quinto método",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Conserva otros campos', () => pm.expect(pm.response.json().capacidad).to.eql(40));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios/{{laboratorioCreadoId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estado\": \"mantenimiento\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08 - GET reservas por usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Solo usuario 3', () => pm.response.json().forEach(r => pm.expect(r.usuarioId).to.eql(3)));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/reservas?usuarioId=3"
+      },
+      "response": []
+    },
+    {
+      "name": "09 - POST reserva temporal",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('reservaCreadaId', String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/reservas",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"RES-0021\",\n  \"laboratorioId\": 1,\n  \"usuarioId\": 3,\n  \"fecha\": \"2026-11-20\",\n  \"horaInicio\": \"18:00\",\n  \"horaFin\": \"19:00\",\n  \"motivo\": \"Prueba de la colección\",\n  \"estado\": \"pendiente\",\n  \"creadoEn\": \"2026-11-02T12:00:00.000Z\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10 - DELETE reserva temporal",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/reservas/{{reservaCreadaId}}"
+      },
+      "response": []
+    },
+    {
+      "name": "11 - DELETE laboratorio temporal",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios/{{laboratorioCreadoId}}"
+      },
+      "response": []
+    },
+    {
+      "name": "12 - GET reserva eliminada devuelve 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/reservas/{{reservaCreadaId}}"
+      },
+      "response": []
+    },
+    {
+      "name": "13 - GET laboratorio eliminado devuelve 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/laboratorios/{{laboratorioCreadoId}}"
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+node_modules/
+.angular/
+dist/
+out-tsc/
+.env
+*.log
+.DS_Store
+angular-admin/src/core/
+.env.*
+!.env.example

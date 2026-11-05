@@ -1,0 +1,37 @@
+<section class="page-heading">
+  <div><div class="eyebrow">GESTIÓN DEL CAMPUS <span class="week-badge">AVANCE 01</span></div><h1>Laboratorios</h1><p>Organiza los espacios donde las ideas se convierten en proyectos.</p></div>
+  <a routerLink="/laboratorios/nuevo" class="btn btn-primary btn-lg"><span aria-hidden="true">+</span> Nuevo laboratorio</a>
+</section>
+@if (mensaje) { <div class="alert alert-success" role="status">{{ mensaje }}</div> }
+@if (error) { <div class="alert alert-danger" role="alert">{{ error }} <button class="btn btn-sm btn-outline-danger ms-2" (click)="cargar()">Reintentar</button></div> }
+<section class="row g-3 metrics" aria-label="Resumen del catálogo completo">
+  <div class="col-6 col-lg-3"><div class="metric"><span>Total de laboratorios</span><strong>{{ catalogo.length }}</strong><small>En {{ sedes.length }} sedes del campus</small></div></div>
+  <div class="col-6 col-lg-3"><div class="metric"><span>Disponibles</span><strong class="text-success">{{ disponibles }}</strong><small>Estado actual del catálogo</small></div></div>
+  <div class="col-6 col-lg-3"><div class="metric"><span>En mantenimiento</span><strong class="text-warning-emphasis">{{ mantenimiento }}</strong><small>Espacios en preparación</small></div></div>
+  <div class="col-6 col-lg-3"><div class="metric"><span>Capacidad total</span><strong>{{ puestos }} <em>puestos</em></strong><small>Suma de todos los laboratorios</small></div></div>
+</section>
+<section class="panel">
+  <div class="panel-heading"><div><h2>Catálogo de espacios</h2><p>Consulta el equipamiento y administra cada laboratorio.</p></div><button class="btn btn-outline-secondary btn-sm" (click)="cargar()" [disabled]="cargando">↻ Actualizar</button></div>
+  <form class="filter-bar row g-3 align-items-end" (ngSubmit)="cargar()">
+    <div class="col-md-6"><label class="form-label" for="buscar">Buscar laboratorio</label><input id="buscar" name="buscar" type="search" class="form-control" [(ngModel)]="texto" placeholder="Nombre, equipo o palabra clave"></div>
+    <div class="col-md-3"><label class="form-label" for="sede">Sede</label><select id="sede" name="sede" class="form-select" [(ngModel)]="sede"><option value="">Todas las sedes</option>@for (opcion of sedes; track opcion) { <option [value]="opcion">{{ opcion }}</option> }</select></div>
+    <div class="col-md-3 d-flex gap-2"><button class="btn btn-primary flex-grow-1" [disabled]="cargando">Filtrar</button><button type="button" class="btn btn-outline-secondary" (click)="limpiar()">Limpiar</button></div>
+  </form>
+  @if (cargando) { <div class="state-box" role="status"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Cargando laboratorios...</div> }
+  @else if (!error && laboratorios.length === 0) { <div class="state-box"><h3>No se encontraron laboratorios</h3><p>Prueba con otra sede o palabra de búsqueda.</p><button class="btn btn-outline-primary" (click)="limpiar()">Ver todos</button></div> }
+  @else if (laboratorios.length > 0) {
+    <div class="table-responsive"><table class="table align-middle catalog-table">
+      <caption class="visually-hidden">Catálogo de laboratorios con estado y acciones</caption>
+      <thead><tr><th scope="col">Laboratorio</th><th scope="col">Sede</th><th scope="col">Capacidad</th><th scope="col">Estado</th><th scope="col" class="text-end">Acciones</th></tr></thead>
+      <tbody>@for (lab of laboratorios; track lab.id) {
+        <tr [appResaltarMantenimiento]="lab.estado">
+          <td><div class="lab-cell"><span class="lab-icon" aria-hidden="true">{{ lab.nombre.replace('Lab ', '') }}</span><div><a [routerLink]="['/laboratorios', lab.id]" class="lab-name">{{ lab.nombre }}</a><small>{{ lab.equipos.join(' · ') }}</small></div></div></td>
+          <td>{{ lab.sede }}</td><td>{{ lab.capacidad }} puestos</td>
+          <td><span class="status-pill" [ngClass]="{ 'status-available': lab.estado === 'disponible', 'status-maintenance': lab.estado === 'mantenimiento' }"><span aria-hidden="true">●</span> {{ lab.estado === 'disponible' ? 'Disponible' : 'Mantenimiento' }}</span></td>
+          <td><div class="action-group"><a class="btn btn-sm btn-outline-secondary" [routerLink]="['/laboratorios', lab.id]" [attr.aria-label]="'Ver detalle de ' + lab.nombre">Ver</a><a class="btn btn-sm btn-outline-primary" [routerLink]="['/laboratorios', lab.id, 'editar']" [attr.aria-label]="'Editar ' + lab.nombre">Editar</a><button class="btn btn-sm btn-outline-danger" (click)="eliminar(lab)" [disabled]="eliminando" [attr.aria-label]="'Eliminar ' + lab.nombre">Eliminar</button></div></td>
+        </tr>
+      }</tbody>
+    </table></div>
+    <div class="table-footer">{{ laboratorios.length }} laboratorio(s) en esta consulta <span>Los cambios se guardan en la API local.</span></div>
+  }
+</section>

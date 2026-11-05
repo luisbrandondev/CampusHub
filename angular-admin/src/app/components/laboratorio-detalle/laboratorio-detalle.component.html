@@ -1,0 +1,14 @@
+<a routerLink="/laboratorios" class="back-link">← Volver a laboratorios</a>
+@if (cargando) { <div class="panel state-box" role="status">Cargando detalle...</div> }
+@if (error) { <div class="alert alert-danger mt-4" role="alert">{{ error }}</div> }
+@if (laboratorio; as lab) {
+<section class="page-heading"><div><div class="eyebrow">CATÁLOGO / DETALLE DEL ESPACIO</div><h1>{{ lab.nombre }}</h1><p>{{ lab.sede }} · Identificador {{ lab.id }}</p></div><a [routerLink]="['/laboratorios', lab.id, 'editar']" class="btn btn-primary">Editar laboratorio</a></section>
+<div class="row g-4"><div class="col-lg-4"><section class="panel detail-card" [appResaltarMantenimiento]="lab.estado">
+  <div class="space-art" aria-hidden="true"><span>{{ lab.nombre.replace('Lab ', '') }}</span><small>CAMPUSHUB / LABS</small></div>
+  <h2>Información del espacio</h2><dl><dt>Sede</dt><dd>{{ lab.sede }}</dd><dt>Capacidad</dt><dd>{{ lab.capacidad }} personas</dd><dt>Estado</dt><dd><span class="status-pill" [ngClass]="lab.estado === 'disponible' ? 'status-available' : 'status-maintenance'">{{ lab.estado === 'disponible' ? 'Disponible' : 'Mantenimiento' }}</span></dd></dl>
+  <h3>Equipamiento</h3><div class="d-flex flex-wrap gap-2">@for (equipo of lab.equipos; track $index) { <span class="equipment-chip">{{ equipo }}</span> }</div>
+</section></div><div class="col-lg-8"><section class="panel"><div class="panel-heading"><div><h2>Reservas del laboratorio</h2><p>{{ reservas.length }} solicitudes · {{ horas }} horas aprobadas en el conjunto de datos</p></div></div>
+  @if (reservas.length === 0) { <div class="state-box"><h3>Aún no tiene reservas</h3><p>Las solicitudes asociadas a este espacio aparecerán aquí.</p></div> }
+  @else { <div class="table-responsive"><table class="table align-middle"><caption class="visually-hidden">Reservas asociadas al laboratorio</caption><thead><tr><th>Código</th><th>Fecha y horario</th><th>Estado</th></tr></thead><tbody>@for (reserva of reservas; track reserva.id) { <tr><td><strong>{{ reserva.codigo }}</strong><small class="d-block text-secondary">{{ reserva.motivo }}</small></td><td>{{ reserva.fecha }}<small class="d-block text-secondary">{{ reserva.horaInicio }} - {{ reserva.horaFin }}</small></td><td><span class="status-pill" [ngClass]="'status-' + reserva.estado">{{ reserva.estado | estadoReserva }}</span></td></tr> }</tbody></table></div> }
+</section></div></div>
+}

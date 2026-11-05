@@ -1,0 +1,30 @@
+{
+  "name": "angular-admin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "sync-core": "node ../scripts/sync-core.mjs",
+    "prestart": "npm run sync-core",
+    "start": "ng serve --host 127.0.0.1 --port 4200",
+    "prebuild": "npm run sync-core",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "20.3.35",
+    "@angular/compiler": "20.3.35",
+    "@angular/core": "20.3.35",
+    "@angular/forms": "20.3.35",
+    "@angular/platform-browser": "20.3.35",
+    "@angular/router": "20.3.35",
+    "bootstrap": "5.3.8",
+    "rxjs": "7.8.2",
+    "tslib": "2.8.1",
+    "zone.js": "0.15.1"
+  },
+  "devDependencies": {
+    "@angular/build": "20.3.42",
+    "@angular/cli": "20.3.42",
+    "@angular/compiler-cli": "20.3.35",
+    "typescript": "5.9.3"
+  }
+}

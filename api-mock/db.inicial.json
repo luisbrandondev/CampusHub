@@ -1,0 +1,402 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Ana Torres",
+      "correo": "admin1@utp.edu.pe",
+      "codigo": "A00000001",
+      "rol": "admin",
+      "password": "admin123"
+    },
+    {
+      "id": 2,
+      "nombre": "Marco Vega",
+      "correo": "admin2@utp.edu.pe",
+      "codigo": "A00000002",
+      "rol": "admin",
+      "password": "admin123"
+    },
+    {
+      "id": 3,
+      "nombre": "Lucía Ramos",
+      "correo": "u20260001@utp.edu.pe",
+      "codigo": "U20260001",
+      "rol": "estudiante",
+      "password": "est123"
+    },
+    {
+      "id": 4,
+      "nombre": "Diego Castro",
+      "correo": "u20260002@utp.edu.pe",
+      "codigo": "U20260002",
+      "rol": "estudiante",
+      "password": "est123"
+    },
+    {
+      "id": 5,
+      "nombre": "Valeria Ruiz",
+      "correo": "u20260003@utp.edu.pe",
+      "codigo": "U20260003",
+      "rol": "estudiante",
+      "password": "est123"
+    },
+    {
+      "id": 6,
+      "nombre": "Mateo Rojas",
+      "correo": "u20260004@utp.edu.pe",
+      "codigo": "U20260004",
+      "rol": "estudiante",
+      "password": "est123"
+    },
+    {
+      "id": 7,
+      "nombre": "Camila Flores",
+      "correo": "u20260005@utp.edu.pe",
+      "codigo": "U20260005",
+      "rol": "estudiante",
+      "password": "est123"
+    },
+    {
+      "id": 8,
+      "nombre": "Bruno León",
+      "correo": "u20260006@utp.edu.pe",
+      "codigo": "U20260006",
+      "rol": "estudiante",
+      "password": "est123"
+    }
+  ],
+  "laboratorios": [
+    {
+      "id": 1,
+      "nombre": "Lab A-301",
+      "sede": "Lima Centro",
+      "capacidad": 30,
+      "equipos": [
+        "PC i7",
+        "Proyector",
+        "Pizarra"
+      ],
+      "estado": "disponible"
+    },
+    {
+      "id": 2,
+      "nombre": "Lab A-302",
+      "sede": "Lima Centro",
+      "capacidad": 24,
+      "equipos": [
+        "PC i5",
+        "Pantalla interactiva"
+      ],
+      "estado": "disponible"
+    },
+    {
+      "id": 3,
+      "nombre": "Lab B-205",
+      "sede": "Lima Sur",
+      "capacidad": 28,
+      "equipos": [
+        "Arduino",
+        "Sensores",
+        "PC i5"
+      ],
+      "estado": "disponible"
+    },
+    {
+      "id": 4,
+      "nombre": "Lab B-206",
+      "sede": "Lima Sur",
+      "capacidad": 20,
+      "equipos": [
+        "Mac Mini",
+        "Tableta gráfica"
+      ],
+      "estado": "disponible"
+    },
+    {
+      "id": 5,
+      "nombre": "Lab C-101",
+      "sede": "Lima Este",
+      "capacidad": 36,
+      "equipos": [
+        "PC i7",
+        "Router Cisco"
+      ],
+      "estado": "disponible"
+    },
+    {
+      "id": 6,
+      "nombre": "Lab C-102",
+      "sede": "Lima Este",
+      "capacidad": 18,
+      "equipos": [
+        "Impresora 3D",
+        "PC i5"
+      ],
+      "estado": "disponible"
+    },
+    {
+      "id": 7,
+      "nombre": "Lab D-401",
+      "sede": "Lima Norte",
+      "capacidad": 25,
+      "equipos": [
+        "PC i7",
+        "Proyector"
+      ],
+      "estado": "mantenimiento"
+    },
+    {
+      "id": 8,
+      "nombre": "Lab D-402",
+      "sede": "Lima Norte",
+      "capacidad": 32,
+      "equipos": [
+        "PC i5",
+        "Kit de robótica"
+      ],
+      "estado": "mantenimiento"
+    }
+  ],
+  "reservas": [
+    {
+      "id": 1,
+      "codigo": "RES-0001",
+      "laboratorioId": 1,
+      "usuarioId": 3,
+      "fecha": "2026-11-09",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Práctica de JavaScript",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T08:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "codigo": "RES-0002",
+      "laboratorioId": 2,
+      "usuarioId": 4,
+      "fecha": "2026-11-09",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Proyecto de programación",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T08:10:00.000Z"
+    },
+    {
+      "id": 3,
+      "codigo": "RES-0003",
+      "laboratorioId": 3,
+      "usuarioId": 5,
+      "fecha": "2026-11-09",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Taller de electrónica",
+      "estado": "rechazada",
+      "creadoEn": "2026-11-02T08:20:00.000Z"
+    },
+    {
+      "id": 4,
+      "codigo": "RES-0004",
+      "laboratorioId": 4,
+      "usuarioId": 6,
+      "fecha": "2026-11-09",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Diseño de prototipos",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T08:30:00.000Z"
+    },
+    {
+      "id": 5,
+      "codigo": "RES-0005",
+      "laboratorioId": 5,
+      "usuarioId": 7,
+      "fecha": "2026-11-09",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Práctica de redes",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T08:40:00.000Z"
+    },
+    {
+      "id": 6,
+      "codigo": "RES-0006",
+      "laboratorioId": 6,
+      "usuarioId": 8,
+      "fecha": "2026-11-09",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Modelado de piezas",
+      "estado": "rechazada",
+      "creadoEn": "2026-11-02T08:50:00.000Z"
+    },
+    {
+      "id": 7,
+      "codigo": "RES-0007",
+      "laboratorioId": 7,
+      "usuarioId": 3,
+      "fecha": "2026-11-09",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Trabajo de investigación",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T09:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "codigo": "RES-0008",
+      "laboratorioId": 8,
+      "usuarioId": 4,
+      "fecha": "2026-11-09",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Introducción a robótica",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T09:10:00.000Z"
+    },
+    {
+      "id": 9,
+      "codigo": "RES-0009",
+      "laboratorioId": 1,
+      "usuarioId": 5,
+      "fecha": "2026-11-10",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Práctica de JavaScript",
+      "estado": "rechazada",
+      "creadoEn": "2026-11-02T09:20:00.000Z"
+    },
+    {
+      "id": 10,
+      "codigo": "RES-0010",
+      "laboratorioId": 2,
+      "usuarioId": 6,
+      "fecha": "2026-11-10",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Proyecto de programación",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T09:30:00.000Z"
+    },
+    {
+      "id": 11,
+      "codigo": "RES-0011",
+      "laboratorioId": 3,
+      "usuarioId": 7,
+      "fecha": "2026-11-10",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Taller de electrónica",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T09:40:00.000Z"
+    },
+    {
+      "id": 12,
+      "codigo": "RES-0012",
+      "laboratorioId": 4,
+      "usuarioId": 8,
+      "fecha": "2026-11-10",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Diseño de prototipos",
+      "estado": "rechazada",
+      "creadoEn": "2026-11-02T09:50:00.000Z"
+    },
+    {
+      "id": 13,
+      "codigo": "RES-0013",
+      "laboratorioId": 5,
+      "usuarioId": 3,
+      "fecha": "2026-11-10",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Práctica de redes",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T10:00:00.000Z"
+    },
+    {
+      "id": 14,
+      "codigo": "RES-0014",
+      "laboratorioId": 6,
+      "usuarioId": 4,
+      "fecha": "2026-11-10",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Modelado de piezas",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T10:10:00.000Z"
+    },
+    {
+      "id": 15,
+      "codigo": "RES-0015",
+      "laboratorioId": 7,
+      "usuarioId": 5,
+      "fecha": "2026-11-10",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Trabajo de investigación",
+      "estado": "rechazada",
+      "creadoEn": "2026-11-02T10:20:00.000Z"
+    },
+    {
+      "id": 16,
+      "codigo": "RES-0016",
+      "laboratorioId": 8,
+      "usuarioId": 6,
+      "fecha": "2026-11-10",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Introducción a robótica",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T10:30:00.000Z"
+    },
+    {
+      "id": 17,
+      "codigo": "RES-0017",
+      "laboratorioId": 1,
+      "usuarioId": 7,
+      "fecha": "2026-11-11",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Práctica de JavaScript",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T10:40:00.000Z"
+    },
+    {
+      "id": 18,
+      "codigo": "RES-0018",
+      "laboratorioId": 2,
+      "usuarioId": 8,
+      "fecha": "2026-11-11",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Proyecto de programación",
+      "estado": "rechazada",
+      "creadoEn": "2026-11-02T10:50:00.000Z"
+    },
+    {
+      "id": 19,
+      "codigo": "RES-0019",
+      "laboratorioId": 3,
+      "usuarioId": 3,
+      "fecha": "2026-11-11",
+      "horaInicio": "08:00",
+      "horaFin": "10:00",
+      "motivo": "Taller de electrónica",
+      "estado": "aprobada",
+      "creadoEn": "2026-11-02T11:00:00.000Z"
+    },
+    {
+      "id": 20,
+      "codigo": "RES-0020",
+      "laboratorioId": 4,
+      "usuarioId": 4,
+      "fecha": "2026-11-11",
+      "horaInicio": "10:00",
+      "horaFin": "11:30",
+      "motivo": "Diseño de prototipos",
+      "estado": "pendiente",
+      "creadoEn": "2026-11-02T11:10:00.000Z"
+    }
+  ]
+}

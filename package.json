@@ -1,0 +1,26 @@
+{
+  "name": "campushub-semana-13",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Avance 1: core-js, json-server y Angular",
+  "workspaces": [
+    "core-js",
+    "api-mock",
+    "angular-admin"
+  ],
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0"
+  },
+  "scripts": {
+    "start": "node scripts/dev.mjs",
+    "api": "npm run api --workspace api-mock",
+    "admin": "npm run start --workspace angular-admin",
+    "sync-core": "node scripts/sync-core.mjs",
+    "test": "npm run test --workspace core-js",
+    "test:api": "node --test pruebas/api.test.mjs",
+    "build": "npm run build --workspace angular-admin",
+    "verificar": "npm test && npm run test:api && npm run build",
+    "restaurar-datos": "node scripts/restaurar-datos.mjs"
+  },
+  "devDependencies": {}
+}
