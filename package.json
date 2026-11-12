@@ -1,12 +1,13 @@
 {
-  "name": "campushub-semana-13",
-  "version": "1.0.0",
+  "name": "campushub",
+  "version": "2.0.0",
   "private": true,
-  "description": "Avance 1: core-js, json-server y Angular",
+  "description": "CampusHub: avances 1 y 2, Angular y portal React del estudiante",
   "workspaces": [
     "core-js",
     "api-mock",
-    "angular-admin"
+    "angular-admin",
+    "react-estudiante"
   ],
   "engines": {
     "node": "^22.12.0 || ^24.0.0"
@@ -15,12 +16,18 @@
     "start": "node scripts/dev.mjs",
     "api": "npm run api --workspace api-mock",
     "admin": "npm run start --workspace angular-admin",
-    "sync-core": "node scripts/sync-core.mjs",
+    "sync-core": "node scripts/sync-core.mjs && node scripts/sync-react.mjs",
     "test": "npm run test --workspace core-js",
     "test:api": "node --test pruebas/api.test.mjs",
-    "build": "npm run build --workspace angular-admin",
-    "verificar": "npm test && npm run test:api && npm run build",
-    "restaurar-datos": "node scripts/restaurar-datos.mjs"
+    "build": "npm run build:angular && npm run build:react",
+    "verificar": "npm test && npm run test:api && npm run test:react && npm run revisar:componentes && npm run build",
+    "restaurar-datos": "node scripts/restaurar-datos.mjs",
+    "estudiante": "npm run start --workspace react-estudiante",
+    "sync-react": "node scripts/sync-react.mjs",
+    "test:react": "npm run sync-react && node --test react-estudiante/tests/reservas.test.js",
+    "build:angular": "npm run build --workspace angular-admin",
+    "build:react": "npm run build --workspace react-estudiante",
+    "revisar:componentes": "node scripts/revisar-componentes.mjs"
   },
   "devDependencies": {}
 }

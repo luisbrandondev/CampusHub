@@ -1,3 +1,4 @@
+// Copia los tres archivos del núcleo a Angular antes de ejecutarlo o compilarlo.
 import { copyFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 const destino = new URL('../angular-admin/src/core/', import.meta.url);

@@ -1,3 +1,4 @@
+// Restaura la semilla solo si se pasa --confirmar; reemplaza la base del API.
 import { copyFileSync } from 'node:fs';
 if (!process.argv.includes('--confirmar')) {
   console.error('Este comando reemplaza db.json por los datos de muestra. Detén la API y ejecuta: npm run restaurar-datos -- --confirmar');

@@ -1,0 +1,23 @@
+{
+  "name": "react-estudiante",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prestart": "node ../scripts/sync-react.mjs",
+    "start": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "prebuild": "node ../scripts/sync-react.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5173 --strictPort"
+  },
+  "dependencies": {
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
+    "react-router-dom": "7.18.5",
+    "bootstrap": "5.3.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "5.2.0",
+    "vite": "7.3.8"
+  }
+}
