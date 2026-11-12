@@ -18,17 +18,17 @@ El proyecto se entrega como **avance funcional de la Semana 13**. No se declaran
 ## 2. Integrantes y datos de entrega
 
 | Campo | Información |
-| --- | --- |
+|---|---|
 | Curso | JavaScript Avanzado (100000SI56) |
 | Grupo | 3 integrantes |
 | Integrante 1 | Luis Brandon Laurente Macha — U18311719 |
-| GitHub del integrante 1 | **PENDIENTE:** agregar usuario real |
-| Integrante 2 | **PENDIENTE:** nombre, código y usuario de GitHub |
-| Integrante 3 | **PENDIENTE:** nombre, código y usuario de GitHub |
+| GitHub del integrante 1 | [luisbrandondev](https://github.com/luisbrandondev) |
+| Integrante 2 | Loa Rojas, Jahn Pahol |
+| Integrante 3 | Ramirez Garcia, Nayely Merarí |
 | Dominio propuesto | CampusHub Labs: laboratorios y reservas |
-| Aprobación del docente | **PENDIENTE DE CONFIRMAR** |
-| Repositorio GitHub | **PENDIENTE:** añadir la URL real |
-| Etiqueta de entrega | `avance-1` — **PENDIENTE DE CREAR al finalizar** |
+| Aprobación del docente | Pendiente de confirmar |
+| Repositorio GitHub | [CampusHub](https://github.com/luisbrandondev/CampusHub) |
+| Etiqueta de entrega | `avance-1` — Creada |
 
 **Colaboración:** cada integrante debe revisar, probar y comprender el código, realizar contribuciones reales y registrarlas con su propia identidad en Git. No se atribuyen commits o tareas individuales que todavía no se hayan realizado.
 
