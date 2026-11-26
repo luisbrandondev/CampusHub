@@ -1,13 +1,15 @@
 {
   "name": "campushub",
-  "version": "2.0.0",
+  "version": "4.0.0",
   "private": true,
-  "description": "CampusHub: avances 1 y 2, Angular y portal React del estudiante",
+  "description": "CampusHub: Angular, React, Vue y Next.js sobre una API compartida",
   "workspaces": [
     "core-js",
     "api-mock",
     "angular-admin",
-    "react-estudiante"
+    "react-estudiante",
+    "vue-kiosko",
+    "next-publico"
   ],
   "engines": {
     "node": "^22.12.0 || ^24.0.0"
@@ -18,13 +20,15 @@
     "admin": "npm run start --workspace angular-admin",
     "sync-core": "node scripts/sync-core.mjs && node scripts/sync-react.mjs",
     "test": "npm run test --workspace core-js",
-    "test:api": "node --test pruebas/api.test.mjs",
-    "build": "npm run build:angular && npm run build:react",
-    "verificar": "npm test && npm run test:api && npm run test:react && npm run revisar:componentes && npm run build",
+    "build": "npm run build:angular && npm run build:react && npm run build:vue && npm run build:next",
+    "verificar": "npm test && npm run revisar:componentes && npm run build",
     "restaurar-datos": "node scripts/restaurar-datos.mjs",
     "estudiante": "npm run start --workspace react-estudiante",
     "sync-react": "node scripts/sync-react.mjs",
-    "test:react": "npm run sync-react && node --test react-estudiante/tests/reservas.test.js",
+    "kiosko": "npm run start --workspace vue-kiosko",
+    "publico": "npm run start --workspace next-publico",
+    "build:vue": "npm run build --workspace vue-kiosko",
+    "build:next": "npm run build --workspace next-publico",
     "build:angular": "npm run build --workspace angular-admin",
     "build:react": "npm run build --workspace react-estudiante",
     "revisar:componentes": "node scripts/revisar-componentes.mjs"

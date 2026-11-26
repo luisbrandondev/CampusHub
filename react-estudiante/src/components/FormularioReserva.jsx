@@ -11,6 +11,7 @@ export default function FormularioReserva({ laboratorios, laboratorioInicial = '
   const [valores, setValores] = useState({ ...camposVacios, laboratorioId: laboratorioInicial });
   const [errores, setErrores] = useState({});
   const [creada, setCreada] = useState(null);
+  const [guardando, setGuardando] = useState(false);
   // useRef conserva referencias al DOM; cambiar una referencia no vuelve a renderizar.
   const primerCampo = useRef(null);
   const formularioRef = useRef(null);
@@ -27,10 +28,13 @@ export default function FormularioReserva({ laboratorios, laboratorioInicial = '
     setCreada(null);
   }
 
-  // La prop onGuardar devuelve errores por campo o la reserva creada en App.
-  function guardar(evento) {
+  // Esperamos al hook: devuelve errores por campo o la reserva guardada en la API.
+  async function guardar(evento) {
     evento.preventDefault();
-    const resultado = onGuardar(valores);
+    if (guardando) return;
+    setGuardando(true);
+    const resultado = await onGuardar(valores);
+    setGuardando(false);
     if (resultado.errores) {
       setErrores(resultado.errores);
       const primerError = Object.keys(resultado.errores)[0];
@@ -77,8 +81,8 @@ export default function FormularioReserva({ laboratorios, laboratorioInicial = '
           value={valores.motivo} onChange={cambiar} error={errores.motivo} />
         <div className="form-actions">
           <Link to="/catalogo" className="btn btn-outline-secondary">Volver al catálogo</Link>
-          <button className="btn btn-primary" type="submit">
-            Confirmar solicitud <Icono nombre="arrow" size={17} />
+          <button className="btn btn-primary" type="submit" disabled={guardando}>
+            {guardando ? 'Guardando...' : 'Confirmar solicitud'} <Icono nombre="arrow" size={17} />
           </button>
         </div>
       </form>

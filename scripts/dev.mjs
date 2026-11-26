@@ -1,4 +1,4 @@
-// Lanza tres procesos Node sin depender de comandos exclusivos de Windows o Linux.
+// Inicia los cuatro frontends y la API con un solo comando.
 import { spawn } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
@@ -11,7 +11,9 @@ const viteCli = new URL('bin/vite.js', pathToFileURL(cargarReact.resolve('vite/p
 const servicios = [
   { cli: 'node_modules/json-server/lib/cli/bin.js', args: ['--watch', 'db.json', '--host', '127.0.0.1', '--port', '3000'], cwd: 'api-mock/' },
   { cli: 'node_modules/@angular/cli/bin/ng.js', args: ['serve', '--host', '127.0.0.1', '--port', '4200'], cwd: 'angular-admin/' },
-  { cli: viteCli, args: ['--host', '127.0.0.1', '--port', '5173', '--strictPort'], cwd: 'react-estudiante/' }
+  { cli: viteCli, args: ['--host', '127.0.0.1', '--port', '5173', '--strictPort'], cwd: 'react-estudiante/' },
+  { cli: viteCli, args: ['--host', '127.0.0.1', '--port', '5174', '--strictPort'], cwd: 'vue-kiosko/' },
+  { cli: 'node_modules/next/dist/bin/next', args: ['dev', '--webpack', '--hostname', '127.0.0.1', '--port', '3001'], cwd: 'next-publico/' }
 ];
 let cerrando = false;
 const procesos = servicios.map((servicio) => spawn(process.execPath,
@@ -29,4 +31,4 @@ procesos.forEach((proceso) => {
 });
 process.on('SIGINT', () => cerrar());
 process.on('SIGTERM', () => cerrar());
-console.log('API: http://localhost:3000 | Panel: http://localhost:4200 | Estudiante: http://localhost:5173 | Detener: Ctrl+C');
+console.log('API :3000 | Angular :4200 | React :5173 | Vue :5174 | Next :3001 | Detener: Ctrl+C');

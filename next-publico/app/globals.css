@@ -1,0 +1,51 @@
+:root { color: #183c4b; background: #f5f8f8; font-family: 'Segoe UI', sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #176278; text-underline-offset: 5px; }
+button, input { font: inherit; }
+button, .boton { background: #176278; color: white; border: none; padding: 15px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; }
+:focus-visible { outline: 3px solid #148397; outline-offset: 4px; }
+.barra { padding: 24px max(5%, calc((100vw - 1180px)/2)); background: white; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #dce6e8; gap: 24px; }
+.marca { text-decoration: none; font-size: 25px; font-weight: 750; color: #183c4b; }
+.marca span { display: block; font-size: 10px; letter-spacing: 4px; margin-top: 4px; }
+nav { display: flex; gap: 28px; font-size: 14px; }
+nav a { text-decoration: none; }
+main { max-width: 1280px; margin: auto; padding: 50px; min-height: 78vh; }
+h1 { font-size: clamp(32px, 4vw, 52px); margin: 14px 0 20px; line-height: 1.15; letter-spacing: -1.5px; }
+h2 { font-size: 23px; }
+p { line-height: 1.7; }
+.intro { color: #56727d; max-width: 650px; }
+.etiqueta { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #176278; }
+.hero { padding: 30px 0 55px; }
+.hero h1 { font-size: clamp(42px, 5vw, 68px); }
+em { color: #27857d; font-style: normal; }
+.panel { padding: 30px; border: 1px solid #dce6e8; border-radius: 16px; background: white; }
+.consulta { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+.buscador { display: flex; gap: 10px; margin-top: 10px; }
+input { width: 100%; min-width: 100px; padding: 14px; border: 1px solid #bdcfd4; border-radius: 8px; color: inherit; }
+.catalogo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+.tarjeta { border-radius: 16px; overflow: hidden; background: white; border: 1px solid #dce6e8; }
+.visual { background: #e2efeb; color: #497e75; min-height: 150px; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 32px; }
+.visual span { font-size: 46px; }
+.tarjeta:nth-child(3n+2) .visual { background: #e5edf5; color: #527794; }
+.tarjeta:nth-child(3n+3) .visual { background: #f0ecdf; color: #8d7845; }
+.tarjeta-cuerpo { padding: 24px; }
+.tarjeta h2 { font-size: 21px; }
+.tarjeta p { color: #56727d; font-size: 14px; }
+.tarjeta a { display: block; padding-top: 18px; margin-top: 22px; border-top: 1px solid #dce6e8; font-size: 14px; }
+.equipos { min-height: 48px; }
+.estado { display: inline-block; padding: 6px 10px; border-radius: 5px; font-size: 12px; background: #eef2f4; text-transform: capitalize; }
+.disponible, .aprobada { background: #ddf1e8; color: #176047; }
+.mantenimiento, .pendiente { background: #fff1cc; color: #795614; }
+.rechazada { background: #f6dfe0; color: #873d46; }
+.espacio { margin-top: 36px; }
+.dos-columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+li { padding: 7px 0; }
+.horarios { list-style: none; padding: 0; }
+.horarios li { display: flex; justify-content: space-between; gap: 15px; border-bottom: 1px solid #dce6e8; padding: 16px 0; }
+.reserva { max-width: 650px; }
+dt { font-size: 12px; color: #56727d; margin-top: 20px; }
+dd { margin: 5px 0; font-weight: 600; }
+footer { padding: 26px 5%; color: #56727d; border-top: 1px solid #dce6e8; font-size: 12px; }
+@media (max-width: 900px) { .catalogo { grid-template-columns: repeat(2, 1fr); } .consulta { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { main { padding: 32px 20px; } .barra { flex-wrap: wrap; } .catalogo, .dos-columnas { grid-template-columns: 1fr; } .buscador { flex-direction: column; } }

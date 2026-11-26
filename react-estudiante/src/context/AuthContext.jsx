@@ -1,21 +1,44 @@
-// Comparte el estudiante en sesión. Las cuentas salen del JSON local de S14.
 import { createContext, useState } from 'react';
-import db from '../data/db.json';
 import { autenticarLocal } from '../utils/auth.js';
+import { consultar } from '../services/api.js';
+import { esCorreoUTP } from '../core/validadores.js';
 export const AuthContext = createContext(null);
-// children son los componentes colocados dentro de AuthProvider en main.jsx.
-export function AuthProvider({ children }) {
-  // null significa que no hay sesión; useState conserva el perfil al navegar.
-  const [usuario, setUsuario] = useState(null);
-  // La función de JavaScript comprueba correo, contraseña y rol.
-  function iniciarSesion(correo, password) {
-    const resultado = autenticarLocal(correo, password, db.usuarios);
-    if (resultado.usuario) setUsuario(resultado.usuario);
-    return resultado;
+const CLAVE = 'campushub-estudiante';
+
+function leerSesion() {
+  try {
+    const usuario = JSON.parse(localStorage.getItem(CLAVE));
+    return usuario?.rol === 'estudiante' && usuario?.id && typeof usuario.nombre === 'string' ? usuario : null;
+  } catch {
+    return null;
   }
+}
+
+export function AuthProvider({ children }) {
+  // La función inicial permite conservar la sesión al recargar.
+  const [usuario, setUsuario] = useState(leerSesion);
+
+  async function iniciarSesion(correo, password) {
+    const limpio = correo.trim().toLowerCase();
+    if (!esCorreoUTP(limpio)) return { error: 'Ingresa tu correo institucional @utp.edu.pe.' };
+    try {
+      const usuarios = await consultar('/usuarios?correo=' + encodeURIComponent(limpio));
+      const resultado = autenticarLocal(limpio, password, usuarios);
+      if (resultado.usuario) {
+        // Guardamos el perfil sin contraseña. El login es simulado hasta el avance 5.
+        localStorage.setItem(CLAVE, JSON.stringify(resultado.usuario));
+        setUsuario(resultado.usuario);
+      }
+      return resultado;
+    } catch (error) {
+      return { error: error.message };
+    }
+  }
+
   function cerrarSesion() {
+    localStorage.removeItem(CLAVE);
     setUsuario(null);
   }
-  // Los descendientes leen este value mediante useContext(AuthContext).
+
   return <AuthContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>{children}</AuthContext.Provider>;
 }

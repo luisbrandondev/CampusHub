@@ -1,0 +1,12 @@
+{
+  "name": "next-publico",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "next dev --webpack --hostname 127.0.0.1 --port 3001",
+    "build": "next build --webpack",
+    "preview": "next start --hostname 127.0.0.1 --port 3001"
+  },
+  "dependencies": { "next": "16.4.6", "react": "19.2.9", "react-dom": "19.2.9" }
+}

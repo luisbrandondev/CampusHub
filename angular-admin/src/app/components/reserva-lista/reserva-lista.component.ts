@@ -13,6 +13,9 @@ import { reservasPorEstado, rankingLaboratorios } from '../../../core/estadistic
 export class ReservaListaComponent implements OnInit, OnDestroy {
   private readonly api = inject(CampusService);
   private consulta?: Subscription;
+  private cambio?: Subscription;
+  guardando: number | null = null;
+  mensaje = '';
   reservas: Reserva[] = []; laboratorios: Laboratorio[] = []; usuarios: Usuario[] = [];
   usuarioId = ''; estado = ''; laboratorioId = ''; cargando = true; error = '';
   conteos = { pendiente: 0, aprobada: 0, rechazada: 0 };
@@ -36,5 +39,22 @@ export class ReservaListaComponent implements OnInit, OnDestroy {
     });
   }
   limpiar() { this.usuarioId = ''; this.estado = ''; this.laboratorioId = ''; this.cargar(); }
-  ngOnDestroy() { this.consulta?.unsubscribe(); }
+  cambiarEstado(reserva: Reserva, estado: 'aprobada' | 'rechazada') {
+    if (this.guardando !== null || reserva.estado !== 'pendiente') return;
+    this.guardando = reserva.id;
+    this.error = '';
+    this.mensaje = '';
+    this.cambio = this.api.cambiarEstadoReserva(reserva.id, estado).subscribe({
+      next: () => {
+        this.guardando = null;
+        this.mensaje = `${reserva.codigo}: ${estado}.`;
+        this.cargar();
+      },
+      error: (error) => {
+        this.guardando = null;
+        this.error = this.api.mensajeError(error);
+      },
+    });
+  }
+  ngOnDestroy() { this.consulta?.unsubscribe(); this.cambio?.unsubscribe(); }
 }

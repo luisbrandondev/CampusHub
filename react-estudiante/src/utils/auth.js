@@ -1,4 +1,4 @@
-// Comprueba una cuenta del JSON local; no realiza una petición ni un login de servidor.
+// Comprueba la lista recibida del API. El contexto se encarga de obtenerla.
 import { esCorreoUTP } from '../core/validadores.js';
 export function autenticarLocal(correo, password, usuarios) {
   // trim quita espacios y toLowerCase permite escribir el correo con mayúsculas.

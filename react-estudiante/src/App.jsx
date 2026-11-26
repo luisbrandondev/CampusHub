@@ -1,10 +1,10 @@
-// Organiza las rutas y guarda las reservas que comparten las páginas del portal.
-import { useContext, useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+// Las rutas reciben datos de hooks; las páginas se encargan de presentarlos.
+import { useContext } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext.jsx';
-import db from './data/db.json';
-import { validarFormularioReserva, construirReserva } from './utils/reservas.js';
-import { inicioReserva } from './utils/fechas.js';
+import { useConsulta } from './hooks/useConsulta.js';
+import { useReservas } from './hooks/useReservas.js';
+import EstadoConsulta from './components/EstadoConsulta.jsx';
 import Navbar from './components/Navbar.jsx';
 import RutaProtegida from './components/RutaProtegida.jsx';
 import Inicio from './pages/Inicio.jsx';
@@ -17,53 +17,36 @@ import NoEncontrado from './pages/NoEncontrado.jsx';
 
 export default function App() {
   const { usuario } = useContext(AuthContext);
-  const { pathname } = useLocation();
-  const laboratorios = db.laboratorios;
-  // useState conserva la lista al navegar. Spread crea otra lista sin alterar el JSON.
-  const [reservas, setReservas] = useState([...db.reservas]);
+  const catalogo = useConsulta('/laboratorios');
+  const reservas = useReservas(usuario?.id);
+  const laboratorios = catalogo.datos ?? [];
 
-  // Al cambiar de página, el navegador vuelve a la parte superior.
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  // El formulario llama a esta función por una prop; primero validamos, luego guardamos.
-  function crearReserva(valores) {
-    if (!usuario) return { errores: { general: 'Inicia sesión para reservar.' } };
-    const errores = validarFormularioReserva(valores, usuario.id, laboratorios, reservas);
-    if (Object.keys(errores).length > 0) return { errores };
-    const reserva = construirReserva(valores, usuario.id, reservas);
-    setReservas((actuales) => [...actuales, reserva]);
-    return { reserva };
+  // Solo las rutas que necesitan el catálogo esperan esa consulta.
+  function conCatalogo(pagina) {
+    if (catalogo.cargando || catalogo.error) return (
+      <EstadoConsulta {...catalogo} onActualizar={catalogo.actualizar} />
+    );
+    return pagina;
   }
 
-  // Solo se puede quitar una reserva propia, activa y futura. filter crea otra lista.
-  function cancelarReserva(id) {
-    const reserva = reservas.find((reserva) => reserva.id === id);
-    if (!reserva || reserva.usuarioId !== usuario?.id) return false;
-    if (reserva.estado === 'rechazada' || inicioReserva(reserva) <= Date.now()) return false;
-    setReservas((actuales) => actuales.filter((reserva) => reserva.id !== id));
-    return true;
-  }
-
-  // Los datos bajan mediante props; las páginas avisan de cambios llamando a funciones.
   return (
     <>
       <a className="visually-hidden-focusable skip-link" href="#contenido">Saltar al contenido</a>
       <Navbar subtitulo="PORTAL DEL ESTUDIANTE" />
       <main className="container-xl main-shell" id="contenido">
         <Routes>
-          <Route path="/" element={<Inicio laboratorios={laboratorios} reservas={reservas} />} />
-          <Route path="/catalogo" element={<Catalogo laboratorios={laboratorios} />} />
-          <Route path="/catalogo/:id" element={<DetalleLaboratorio laboratorios={laboratorios} reservas={reservas} />} />
-          {/* Outlet muestra estas páginas solamente si RutaProtegida encuentra una sesión. */}
+          <Route path="/" element={conCatalogo(
+            <Inicio laboratorios={laboratorios} reservas={reservas.datos} consultaReservas={reservas} />
+          )} />
+          <Route path="/catalogo" element={conCatalogo(<Catalogo laboratorios={laboratorios} />)} />
+          <Route path="/catalogo/:id" element={<DetalleLaboratorio />} />
           <Route element={<RutaProtegida />}>
-            <Route path="/mis-reservas" element={
-              <MisReservas reservas={reservas} laboratorios={laboratorios} onCancelarReserva={cancelarReserva} />
-            } />
-            <Route path="/nueva-reserva" element={
-              <NuevaReserva laboratorios={laboratorios} onCrearReserva={crearReserva} />
-            } />
+            <Route path="/mis-reservas" element={conCatalogo(
+              <MisReservas gestion={reservas} laboratorios={laboratorios} />
+            )} />
+            <Route path="/nueva-reserva" element={conCatalogo(
+              <NuevaReserva laboratorios={laboratorios} onCrearReserva={reservas.crear} />
+            )} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NoEncontrado />} />
@@ -71,7 +54,7 @@ export default function App() {
       </main>
       <footer className="container-xl site-footer">
         <span>CampusHub Labs · Un lugar para tus ideas</span>
-        <span>Demostración académica · Semana 14</span>
+        <span>Portal del estudiante</span>
       </footer>
     </>
   );

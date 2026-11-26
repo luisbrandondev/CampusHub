@@ -6,7 +6,8 @@ import { useTitulo } from '../hooks/useTitulo.js';
 import ContadorReserva from '../components/ContadorReserva.jsx';
 import ListaLaboratorios from '../components/ListaLaboratorios.jsx';
 import Icono from '../components/Icono.jsx';
-export default function Inicio({ laboratorios, reservas }) {
+import EstadoConsulta from '../components/EstadoConsulta.jsx';
+export default function Inicio({ laboratorios, reservas, consultaReservas }) {
   useTitulo('Inicio');
   const { usuario } = useContext(AuthContext);
   // filter y Set calculan el resumen; no crean otro estado ni modifican el catálogo.
@@ -53,6 +54,7 @@ export default function Inicio({ laboratorios, reservas }) {
           </div>
         </div>
         <div className="col-lg-5">
+          {usuario && <EstadoConsulta {...consultaReservas} onActualizar={consultaReservas.actualizar} />}
           <ContadorReserva reservas={reservas} usuarioId={usuario?.id} laboratorios={laboratorios} />
         </div>
       </section>

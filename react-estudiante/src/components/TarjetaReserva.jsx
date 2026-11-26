@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import BadgeEstado from './BadgeEstado.jsx';
 import { fechaLegible, inicioReserva } from '../utils/fechas.js';
 import Icono from './Icono.jsx';
-export default function TarjetaReserva({ reserva, laboratorio, onCancelar }) {
+export default function TarjetaReserva({ reserva, laboratorio, onCancelar, cancelando }) {
   const puedeCancelar = reserva.estado !== 'rechazada' && inicioReserva(reserva) > Date.now();
-  // onCancelar es una función recibida por props: App es quien modifica la lista.
+  // La prop comunica la acción al hook, que elimina la reserva en la API.
   function cancelar() {
     if (confirm(`¿Cancelar la reserva ${reserva.codigo}?`)) onCancelar(reserva.id);
   }
@@ -30,7 +30,7 @@ export default function TarjetaReserva({ reserva, laboratorio, onCancelar }) {
         <p className="reservation-reason">{reserva.motivo}</p>
       </div>
       {puedeCancelar && (
-        <button className="btn btn-outline-danger btn-sm" onClick={cancelar} aria-label={`Cancelar ${reserva.codigo}`}>
+        <button className="btn btn-outline-danger btn-sm" disabled={cancelando} onClick={cancelar} aria-label={`Cancelar ${reserva.codigo}`}>
           Cancelar reserva
         </button>
       )}

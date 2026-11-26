@@ -41,8 +41,7 @@ export default function NuevaReserva({ laboratorios, onCrearReserva }) {
               <li>Una reserva rechazada no bloquea disponibilidad.</li>
             </ul>
             <div className="local-note">
-              Esta demostración conserva tus cambios mientras navegas. Al recargar la página, vuelve a los datos de
-              muestra.
+              Tu solicitud se guarda y el administrador podrá aprobarla o rechazarla.
             </div>
           </section>
         </aside>

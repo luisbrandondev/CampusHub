@@ -5,11 +5,18 @@ import BadgeEstado from '../components/BadgeEstado.jsx';
 import EstadoVacio from '../components/EstadoVacio.jsx';
 import Icono from '../components/Icono.jsx';
 import { fechaLegible, inicioReserva } from '../utils/fechas.js';
-export default function DetalleLaboratorio({ laboratorios, reservas }) {
-  // useParams lee texto de la URL; Number permite compararlo con el ID numérico.
+import { useConsulta } from '../hooks/useConsulta.js';
+import EstadoConsulta from '../components/EstadoConsulta.jsx';
+
+export default function DetalleLaboratorio() {
+  // El ID de la URL determina qué objeto pedimos a la API.
   const { id } = useParams();
-  const laboratorio = laboratorios.find((lab) => lab.id === Number(id));
+  const detalle = useConsulta(`/laboratorios/${encodeURIComponent(id)}`);
+  const horarios = useConsulta(`/reservas?laboratorioId=${encodeURIComponent(id)}`);
+  const laboratorio = detalle.datos;
+  const reservas = horarios.datos ?? [];
   useTitulo(laboratorio?.nombre ?? 'Laboratorio no encontrado');
+  if (detalle.cargando || detalle.error) return <EstadoConsulta {...detalle} onActualizar={detalle.actualizar} />;
   if (!laboratorio)
     return (
       <EstadoVacio
@@ -87,7 +94,8 @@ export default function DetalleLaboratorio({ laboratorios, reservas }) {
           </section>
           <section className="surface booking-side mt-4">
             <h2>Horarios ya solicitados</h2>
-            {ocupadas.length ? (
+            <EstadoConsulta {...horarios} onActualizar={horarios.actualizar} />
+            {!horarios.cargando && !horarios.error && (ocupadas.length ? (
               <ul className="schedule-list">
                 {ocupadas.map((r) => (
                   <li key={r.id}>
@@ -103,7 +111,7 @@ export default function DetalleLaboratorio({ laboratorios, reservas }) {
               </ul>
             ) : (
               <p className="mb-0">No hay solicitudes activas futuras para este espacio.</p>
-            )}
+            ))}
           </section>
         </div>
       </div>

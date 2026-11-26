@@ -23,6 +23,10 @@ export class CampusService {
     return this.http.get<Reserva[]>(`${API_URL}/reservas`, { params });
   }
   listarUsuarios() { return this.http.get<Usuario[]>(`${API_URL}/usuarios`); }
+  cambiarEstadoReserva(id: number, estado: 'aprobada' | 'rechazada') {
+    // PATCH cambia únicamente el estado y conserva los demás campos de la reserva.
+    return this.http.patch<Reserva>(`${API_URL}/reservas/${id}`, { estado });
+  }
   mensajeError(error: unknown): string {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 0) return 'No se pudo conectar con la API. Comprueba que npm run api esté activo en el puerto 3000.';

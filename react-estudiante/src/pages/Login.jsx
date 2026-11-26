@@ -1,4 +1,4 @@
-// Permite ingresar con las cuentas locales y volver a la página que pidió sesión.
+// Permite ingresar con las cuentas de la API y volver a la página que pidió sesión.
 import { useContext, useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
@@ -12,6 +12,7 @@ export default function Login() {
   const ubicacion = useLocation();
   const [valores, setValores] = useState({ correo: '', password: '' });
   const [errores, setErrores] = useState({});
+  const [cargando, setCargando] = useState(false);
   // RutaProtegida guarda la dirección de origen. Solo aceptamos rutas internas.
   let destino = ubicacion.state?.desde || '/mis-reservas';
   if (!destino.startsWith('/') || destino.startsWith('//')) destino = '/mis-reservas';
@@ -24,14 +25,17 @@ export default function Login() {
     setErrores({});
   }
 
-  // preventDefault evita recargar; el contexto comprueba la cuenta en el JSON.
-  function ingresar(evento) {
+  // preventDefault evita recargar; el contexto consulta y comprueba la cuenta.
+  async function ingresar(evento) {
     evento.preventDefault();
     if (!valores.password) {
       setErrores({ password: 'Ingresa la contraseña de demostración.' });
       return;
     }
-    const resultado = iniciarSesion(valores.correo, valores.password);
+    if (cargando) return;
+    setCargando(true);
+    const resultado = await iniciarSesion(valores.correo, valores.password);
+    setCargando(false);
     if (resultado.error) {
       setErrores({ acceso: resultado.error });
       return;
@@ -62,13 +66,15 @@ export default function Login() {
           <CampoReserva id="password" etiqueta="Contraseña" type="password" autoComplete="current-password"
             value={valores.password} onChange={cambiar} error={errores.password} />
           {errores.acceso && <div className="alert alert-danger" role="alert">{errores.acceso}</div>}
-          <button className="btn btn-primary w-100" type="submit">Entrar al portal <Icono nombre="arrow" size={18} /></button>
+          <button className="btn btn-primary w-100" type="submit" disabled={cargando}>
+            {cargando ? 'Comprobando cuenta...' : 'Entrar al portal'} <Icono nombre="arrow" size={18} />
+          </button>
         </form>
         <div className="demo-account">
           <strong>Cuenta para probar</strong>
           <span>u20260001@utp.edu.pe</span>
           <span>Contraseña: <code>est123</code></span>
-          <p>Inicio de sesión simulado con datos locales. No ingreses contraseñas personales.</p>
+          <p>Cuenta de demostración. La sesión se conserva en este navegador.</p>
         </div>
       </div>
     </section>

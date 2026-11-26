@@ -8,3 +8,6 @@ out-tsc/
 angular-admin/src/core/
 .env.*
 !.env.example
+.next/
+next-env.d.ts
+react-estudiante/src/core/
