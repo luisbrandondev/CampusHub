@@ -18,7 +18,12 @@ export function useReservas(usuarioId) {
     consulta.current?.abort();
     const controlador = new AbortController();
     consulta.current = controlador;
-    if (!usuarioId) { setDatos([]); setCargando(false); setError(''); return; }
+    if (!usuarioId) {
+      setDatos([]);
+      setCargando(false);
+      setError('');
+      return;
+    }
     setCargando(true);
     setError('');
     try {
@@ -44,7 +49,10 @@ export function useReservas(usuarioId) {
     actualizar();
     // Angular puede aprobar una reserva mientras el estudiante mantiene esta página abierta.
     const intervalo = setInterval(actualizar, 15000);
-    return () => { clearInterval(intervalo); consulta.current?.abort(); };
+    return () => {
+      clearInterval(intervalo);
+      consulta.current?.abort();
+    };
   }, [actualizar]);
 
   async function crear(valores) {
@@ -53,7 +61,10 @@ export function useReservas(usuarioId) {
     operando.current = true;
     try {
       // Consultamos TODAS las reservas: un horario ocupado por otro usuario también bloquea.
-      const [laboratorios, reservas] = await Promise.all([consultar('/laboratorios'), consultar('/reservas')]);
+      const [laboratorios, reservas] = await Promise.all([
+        consultar('/laboratorios'),
+        consultar('/reservas'),
+      ]);
       const errores = validarFormularioReserva(valores, usuarioId, laboratorios, reservas);
       if (Object.keys(errores).length) return { errores };
       const nueva = construirReserva(valores, usuarioId, reservas);
@@ -74,7 +85,11 @@ export function useReservas(usuarioId) {
     operando.current = true;
     try {
       const reserva = await consultar(`/reservas/${id}`);
-      if (reserva.usuarioId !== usuarioId || reserva.estado === 'rechazada' || inicioReserva(reserva) <= Date.now()) {
+      if (
+        reserva.usuarioId !== usuarioId ||
+        reserva.estado === 'rechazada' ||
+        inicioReserva(reserva) <= Date.now()
+      ) {
         throw new Error('Solo puedes cancelar tus reservas activas futuras.');
       }
       await api.delete(`/reservas/${id}`);

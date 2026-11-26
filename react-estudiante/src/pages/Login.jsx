@@ -47,33 +47,62 @@ export default function Login() {
     <section className="login-layout">
       <div className="login-story">
         <span className="eyebrow">BIENVENIDO A TU CAMPUS</span>
-        <h1>Tu siguiente idea<br />ya tiene lugar.</h1>
+        <h1>
+          Tu siguiente idea
+          <br />
+          ya tiene lugar.
+        </h1>
         <p>Ingresa para reservar un laboratorio y organizar tus próximas actividades.</p>
         <div className="login-illustration" aria-hidden="true">
           <Icono nombre="logo" size={106} />
           <span>CAMPUSHUB LABS</span>
         </div>
-        <Link to="/catalogo" className="quiet-link">Explorar sin iniciar sesión <Icono nombre="arrow" size={18} /></Link>
+        <Link to="/catalogo" className="quiet-link">
+          Explorar sin iniciar sesión <Icono nombre="arrow" size={18} />
+        </Link>
       </div>
       <div className="surface login-form">
         <h2>Inicia sesión</h2>
         <p className="section-copy">Usa una cuenta de estudiante de demostración.</p>
-        {ubicacion.state?.desde && <div className="alert alert-info">Inicia sesión para acceder a tus reservas.</div>}
+        {ubicacion.state?.desde && (
+          <div className="alert alert-info">Inicia sesión para acceder a tus reservas.</div>
+        )}
         <form onSubmit={ingresar} noValidate>
           {/* Reutilizamos el mismo campo accesible del formulario de reservas. */}
-          <CampoReserva id="correo" etiqueta="Correo institucional" type="email" autoComplete="username"
-            placeholder="u20260001@utp.edu.pe" value={valores.correo} onChange={cambiar} />
-          <CampoReserva id="password" etiqueta="Contraseña" type="password" autoComplete="current-password"
-            value={valores.password} onChange={cambiar} error={errores.password} />
-          {errores.acceso && <div className="alert alert-danger" role="alert">{errores.acceso}</div>}
+          <CampoReserva
+            id="correo"
+            etiqueta="Correo institucional"
+            type="email"
+            autoComplete="username"
+            placeholder="u20260001@utp.edu.pe"
+            value={valores.correo}
+            onChange={cambiar}
+          />
+          <CampoReserva
+            id="password"
+            etiqueta="Contraseña"
+            type="password"
+            autoComplete="current-password"
+            value={valores.password}
+            onChange={cambiar}
+            error={errores.password}
+          />
+          {errores.acceso && (
+            <div className="alert alert-danger" role="alert">
+              {errores.acceso}
+            </div>
+          )}
           <button className="btn btn-primary w-100" type="submit" disabled={cargando}>
-            {cargando ? 'Comprobando cuenta...' : 'Entrar al portal'} <Icono nombre="arrow" size={18} />
+            {cargando ? 'Comprobando cuenta...' : 'Entrar al portal'}{' '}
+            <Icono nombre="arrow" size={18} />
           </button>
         </form>
         <div className="demo-account">
           <strong>Cuenta para probar</strong>
           <span>u20260001@utp.edu.pe</span>
-          <span>Contraseña: <code>est123</code></span>
+          <span>
+            Contraseña: <code>est123</code>
+          </span>
           <p>Cuenta de demostración. La sesión se conserva en este navegador.</p>
         </div>
       </div>

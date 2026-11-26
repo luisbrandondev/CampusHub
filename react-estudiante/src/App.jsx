@@ -23,30 +23,42 @@ export default function App() {
 
   // Solo las rutas que necesitan el catálogo esperan esa consulta.
   function conCatalogo(pagina) {
-    if (catalogo.cargando || catalogo.error) return (
-      <EstadoConsulta {...catalogo} onActualizar={catalogo.actualizar} />
-    );
+    if (catalogo.cargando || catalogo.error)
+      return <EstadoConsulta {...catalogo} onActualizar={catalogo.actualizar} />;
     return pagina;
   }
 
   return (
     <>
-      <a className="visually-hidden-focusable skip-link" href="#contenido">Saltar al contenido</a>
+      <a className="visually-hidden-focusable skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
       <Navbar subtitulo="PORTAL DEL ESTUDIANTE" />
       <main className="container-xl main-shell" id="contenido">
         <Routes>
-          <Route path="/" element={conCatalogo(
-            <Inicio laboratorios={laboratorios} reservas={reservas.datos} consultaReservas={reservas} />
-          )} />
+          <Route
+            path="/"
+            element={conCatalogo(
+              <Inicio
+                laboratorios={laboratorios}
+                reservas={reservas.datos}
+                consultaReservas={reservas}
+              />,
+            )}
+          />
           <Route path="/catalogo" element={conCatalogo(<Catalogo laboratorios={laboratorios} />)} />
           <Route path="/catalogo/:id" element={<DetalleLaboratorio />} />
           <Route element={<RutaProtegida />}>
-            <Route path="/mis-reservas" element={conCatalogo(
-              <MisReservas gestion={reservas} laboratorios={laboratorios} />
-            )} />
-            <Route path="/nueva-reserva" element={conCatalogo(
-              <NuevaReserva laboratorios={laboratorios} onCrearReserva={reservas.crear} />
-            )} />
+            <Route
+              path="/mis-reservas"
+              element={conCatalogo(<MisReservas gestion={reservas} laboratorios={laboratorios} />)}
+            />
+            <Route
+              path="/nueva-reserva"
+              element={conCatalogo(
+                <NuevaReserva laboratorios={laboratorios} onCrearReserva={reservas.crear} />,
+              )}
+            />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NoEncontrado />} />

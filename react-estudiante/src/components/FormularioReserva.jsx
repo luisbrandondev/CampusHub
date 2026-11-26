@@ -1,9 +1,7 @@
 // Formulario controlado: muestra los valores del estado y comunica el envío al padre.
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fechaCampus } from '../utils/fechas.js';
-import CampoReserva from './CampoReserva.jsx';
-import SelectorLaboratorio from './SelectorLaboratorio.jsx';
+import CamposReserva from './CamposReserva.jsx';
 import Icono from './Icono.jsx';
 
 const camposVacios = { laboratorioId: '', fecha: '', horaInicio: '', horaFin: '', motivo: '' };
@@ -55,36 +53,25 @@ export default function FormularioReserva({ laboratorios, laboratorioInicial = '
       <p className="section-copy">Todos los campos son obligatorios. Horarios en hora de Perú.</p>
       {creada && (
         <div className="alert alert-success" role="status">
-          <Icono nombre="check" /> <strong>{creada.codigo} registrada.</strong> Tu solicitud está pendiente.{' '}
-          <Link to="/mis-reservas">Ver mis reservas</Link>
+          <Icono nombre="check" /> <strong>{creada.codigo} registrada.</strong> Tu solicitud está
+          pendiente. <Link to="/mis-reservas">Ver mis reservas</Link>
         </div>
       )}
-      {errores.general && <div className="alert alert-danger" role="alert">{errores.general}</div>}
+      {errores.general && (
+        <div className="alert alert-danger" role="alert">
+          {errores.general}
+        </div>
+      )}
       {/* noValidate permite mostrar nuestros propios mensajes debajo de cada campo. */}
       <form ref={formularioRef} onSubmit={guardar} noValidate>
-        <SelectorLaboratorio laboratorios={laboratorios} referencia={primerCampo}
-          value={valores.laboratorioId} onChange={cambiar} error={errores.laboratorioId} />
-        <CampoReserva id="fecha" etiqueta="Fecha" type="date" min={fechaCampus()}
-          value={valores.fecha} onChange={cambiar} error={errores.fecha} />
-        <div className="row g-3">
-          <div className="col-sm-6">
-            <CampoReserva id="horaInicio" etiqueta="Hora de inicio" type="time" step="60"
-              value={valores.horaInicio} onChange={cambiar} error={errores.horaInicio} />
-          </div>
-          <div className="col-sm-6">
-            <CampoReserva id="horaFin" etiqueta="Hora de fin" type="time" step="60"
-              value={valores.horaFin} onChange={cambiar} error={errores.horaFin} />
-          </div>
-        </div>
-        <CampoReserva id="motivo" etiqueta="Motivo de la reserva" multilinea maxLength={200}
-          placeholder="Ejemplo: práctica grupal de React"
-          value={valores.motivo} onChange={cambiar} error={errores.motivo} />
-        <div className="form-actions">
-          <Link to="/catalogo" className="btn btn-outline-secondary">Volver al catálogo</Link>
-          <button className="btn btn-primary" type="submit" disabled={guardando}>
-            {guardando ? 'Guardando...' : 'Confirmar solicitud'} <Icono nombre="arrow" size={17} />
-          </button>
-        </div>
+        <CamposReserva
+          laboratorios={laboratorios}
+          primerCampo={primerCampo}
+          valores={valores}
+          errores={errores}
+          guardando={guardando}
+          onChange={cambiar}
+        />
       </form>
     </section>
   );

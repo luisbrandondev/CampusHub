@@ -8,7 +8,9 @@ const CLAVE = 'campushub-estudiante';
 function leerSesion() {
   try {
     const usuario = JSON.parse(localStorage.getItem(CLAVE));
-    return usuario?.rol === 'estudiante' && usuario?.id && typeof usuario.nombre === 'string' ? usuario : null;
+    return usuario?.rol === 'estudiante' && usuario?.id && typeof usuario.nombre === 'string'
+      ? usuario
+      : null;
   } catch {
     return null;
   }
@@ -40,5 +42,9 @@ export function AuthProvider({ children }) {
     setUsuario(null);
   }
 
-  return <AuthContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

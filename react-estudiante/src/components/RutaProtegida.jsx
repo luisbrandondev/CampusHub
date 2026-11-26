@@ -7,7 +7,9 @@ export default function RutaProtegida() {
   const ubicacion = useLocation();
   // Navigate cambia la ruta; state recuerda a qué página quería entrar el usuario.
   if (!usuario) {
-    return <Navigate to="/login" state={{ desde: ubicacion.pathname + ubicacion.search }} replace />;
+    return (
+      <Navigate to="/login" state={{ desde: ubicacion.pathname + ubicacion.search }} replace />
+    );
   }
   // Outlet es el espacio donde React Router coloca la página protegida.
   return <Outlet />;

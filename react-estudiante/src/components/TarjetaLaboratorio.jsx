@@ -29,7 +29,11 @@ export default function TarjetaLaboratorio({ laboratorio }) {
             <span key={`${equipo}-${index}`}>{equipo}</span>
           ))}
         </div>
-        <Link className="lab-detail-link" to={`/catalogo/${id}`} aria-label={`Ver detalle de ${nombre}`}>
+        <Link
+          className="lab-detail-link"
+          to={`/catalogo/${id}`}
+          aria-label={`Ver detalle de ${nombre}`}
+        >
           Explorar laboratorio <Icono nombre="arrow" size={18} />
         </Link>
       </div>

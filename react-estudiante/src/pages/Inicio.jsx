@@ -27,8 +27,8 @@ export default function Inicio({ laboratorios, reservas, consultaReservas }) {
             tus <em>grandes ideas.</em>
           </h1>
           <p>
-            {usuario ? `Hola, ${usuario.nombre.split(' ')[0]}. ` : ''}Encuentra el laboratorio ideal, elige tu horario y
-            dale lugar a tu próximo proyecto.
+            {usuario ? `Hola, ${usuario.nombre.split(' ')[0]}. ` : ''}Encuentra el laboratorio
+            ideal, elige tu horario y dale lugar a tu próximo proyecto.
           </p>
           <div className="hero-actions">
             <Link to="/catalogo" className="btn btn-primary btn-lg">
@@ -54,8 +54,14 @@ export default function Inicio({ laboratorios, reservas, consultaReservas }) {
           </div>
         </div>
         <div className="col-lg-5">
-          {usuario && <EstadoConsulta {...consultaReservas} onActualizar={consultaReservas.actualizar} />}
-          <ContadorReserva reservas={reservas} usuarioId={usuario?.id} laboratorios={laboratorios} />
+          {usuario && (
+            <EstadoConsulta {...consultaReservas} onActualizar={consultaReservas.actualizar} />
+          )}
+          <ContadorReserva
+            reservas={reservas}
+            usuarioId={usuario?.id}
+            laboratorios={laboratorios}
+          />
         </div>
       </section>
       <section className="steps-strip" aria-label="Cómo reservar">

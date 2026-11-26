@@ -22,7 +22,9 @@ export default function TarjetaReserva({ reserva, laboratorio, onCancelar, cance
           <BadgeEstado estado={reserva.estado} />
         </div>
         <h2>
-          <Link to={`/catalogo/${reserva.laboratorioId}`}>{laboratorio?.nombre ?? 'Laboratorio'}</Link>
+          <Link to={`/catalogo/${reserva.laboratorioId}`}>
+            {laboratorio?.nombre ?? 'Laboratorio'}
+          </Link>
         </h2>
         <p className="reservation-meta">
           {fechaLegible(reserva.fecha)} · {reserva.horaInicio} - {reserva.horaFin} h
@@ -30,7 +32,12 @@ export default function TarjetaReserva({ reserva, laboratorio, onCancelar, cance
         <p className="reservation-reason">{reserva.motivo}</p>
       </div>
       {puedeCancelar && (
-        <button className="btn btn-outline-danger btn-sm" disabled={cancelando} onClick={cancelar} aria-label={`Cancelar ${reserva.codigo}`}>
+        <button
+          className="btn btn-outline-danger btn-sm"
+          disabled={cancelando}
+          onClick={cancelar}
+          aria-label={`Cancelar ${reserva.codigo}`}
+        >
           Cancelar reserva
         </button>
       )}

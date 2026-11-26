@@ -11,8 +11,13 @@ export default function Layout({ children }) {
     <html lang="es">
       <body>
         <header className="barra">
-          <Link href="/" className="marca">CampusHub <span>LABS</span></Link>
-          <nav aria-label="Navegación principal"><Link href="/laboratorios">Laboratorios</Link><Link href="/">Consultar reserva</Link></nav>
+          <Link href="/" className="marca">
+            CampusHub <span>LABS</span>
+          </Link>
+          <nav aria-label="Navegación principal">
+            <Link href="/laboratorios">Laboratorios</Link>
+            <Link href="/">Consultar reserva</Link>
+          </nav>
         </header>
         <main>{children}</main>
         <footer>CampusHub Labs · Conoce tu próximo espacio.</footer>

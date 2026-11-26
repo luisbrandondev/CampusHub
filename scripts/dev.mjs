@@ -9,25 +9,55 @@ const raiz = new URL('../', import.meta.url);
 const cargarReact = createRequire(new URL('../react-estudiante/package.json', import.meta.url));
 const viteCli = new URL('bin/vite.js', pathToFileURL(cargarReact.resolve('vite/package.json')));
 const servicios = [
-  { cli: 'node_modules/json-server/lib/cli/bin.js', args: ['--watch', 'db.json', '--host', '127.0.0.1', '--port', '3000'], cwd: 'api-mock/' },
-  { cli: 'node_modules/@angular/cli/bin/ng.js', args: ['serve', '--host', '127.0.0.1', '--port', '4200'], cwd: 'angular-admin/' },
-  { cli: viteCli, args: ['--host', '127.0.0.1', '--port', '5173', '--strictPort'], cwd: 'react-estudiante/' },
-  { cli: viteCli, args: ['--host', '127.0.0.1', '--port', '5174', '--strictPort'], cwd: 'vue-kiosko/' },
-  { cli: 'node_modules/next/dist/bin/next', args: ['dev', '--webpack', '--hostname', '127.0.0.1', '--port', '3001'], cwd: 'next-publico/' }
+  {
+    cli: 'node_modules/json-server/lib/cli/bin.js',
+    args: ['--watch', 'db.json', '--host', '127.0.0.1', '--port', '3000'],
+    cwd: 'api-mock/',
+  },
+  {
+    cli: 'node_modules/@angular/cli/bin/ng.js',
+    args: ['serve', '--host', '127.0.0.1', '--port', '4200'],
+    cwd: 'angular-admin/',
+  },
+  {
+    cli: viteCli,
+    args: ['--host', '127.0.0.1', '--port', '5173', '--strictPort'],
+    cwd: 'react-estudiante/',
+  },
+  {
+    cli: viteCli,
+    args: ['--host', '127.0.0.1', '--port', '5174', '--strictPort'],
+    cwd: 'vue-kiosko/',
+  },
+  {
+    cli: 'node_modules/next/dist/bin/next',
+    args: ['dev', '--webpack', '--hostname', '127.0.0.1', '--port', '3001'],
+    cwd: 'next-publico/',
+  },
 ];
 let cerrando = false;
-const procesos = servicios.map((servicio) => spawn(process.execPath,
-  [fileURLToPath(new URL(servicio.cli, raiz)), ...servicio.args],
-  { cwd: new URL(servicio.cwd, raiz), stdio: 'inherit' }));
+const procesos = servicios.map((servicio) =>
+  spawn(process.execPath, [fileURLToPath(new URL(servicio.cli, raiz)), ...servicio.args], {
+    cwd: new URL(servicio.cwd, raiz),
+    stdio: 'inherit',
+  }),
+);
 function cerrar(codigo = 0) {
   if (cerrando) return;
   cerrando = true;
-  procesos.forEach((proceso) => { if (proceso.exitCode === null) proceso.kill('SIGTERM'); });
+  procesos.forEach((proceso) => {
+    if (proceso.exitCode === null) proceso.kill('SIGTERM');
+  });
   process.exitCode = codigo;
 }
 procesos.forEach((proceso) => {
-  proceso.on('error', (error) => { console.error(error.message); cerrar(1); });
-  proceso.on('exit', (codigo) => { if (!cerrando) cerrar(codigo ?? 1); });
+  proceso.on('error', (error) => {
+    console.error(error.message);
+    cerrar(1);
+  });
+  proceso.on('exit', (codigo) => {
+    if (!cerrando) cerrar(codigo ?? 1);
+  });
 });
 process.on('SIGINT', () => cerrar());
 process.on('SIGTERM', () => cerrar());

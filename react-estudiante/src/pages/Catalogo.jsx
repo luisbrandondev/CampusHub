@@ -58,7 +58,12 @@ export default function Catalogo({ laboratorios }) {
             <label className="form-label" htmlFor="sede">
               Sede
             </label>
-            <select id="sede" className="form-select" value={sede} onChange={(e) => setSede(e.target.value)}>
+            <select
+              id="sede"
+              className="form-select"
+              value={sede}
+              onChange={(e) => setSede(e.target.value)}
+            >
               <option value="">Todas las sedes</option>
               {sedesUnicas(laboratorios).map((opcion) => (
                 <option key={opcion}>{opcion}</option>

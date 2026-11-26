@@ -14,5 +14,6 @@ const alova = createAlova({
 });
 
 // Cada estudiante tiene una entrada distinta de caché, válida durante 30 segundos.
-export const pedirResumen = (usuarioId) => alova.Get(`/reservas?usuarioId=${usuarioId}`, { cacheFor: 30000 });
+export const pedirResumen = (usuarioId) =>
+  alova.Get(`/reservas?usuarioId=${usuarioId}`, { cacheFor: 30000 });
 export const invalidarResumen = (usuarioId) => invalidateCache(pedirResumen(usuarioId));

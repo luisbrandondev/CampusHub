@@ -1,5 +1,13 @@
 // Reutiliza etiqueta, control y error para evitar repetirlos en reserva y login.
-export default function CampoReserva({ id, etiqueta, error, value, onChange, multilinea = false, ...atributos }) {
+export default function CampoReserva({
+  id,
+  etiqueta,
+  error,
+  value,
+  onChange,
+  multilinea = false,
+  ...atributos
+}) {
   // ...atributos recoge propiedades como type o min. Spread las aplica al input.
   const comunes = {
     id,

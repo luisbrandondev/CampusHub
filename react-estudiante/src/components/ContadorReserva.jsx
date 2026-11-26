@@ -44,7 +44,9 @@ export default function ContadorReserva({ reservas, usuarioId, laboratorios }) {
             </Link>
           </div>
           {proxima.estado === 'pendiente' && (
-            <small className="pending-note">El horario está solicitado y aún requiere aprobación.</small>
+            <small className="pending-note">
+              El horario está solicitado y aún requiere aprobación.
+            </small>
           )}
         </>
       ) : (
@@ -60,7 +62,8 @@ export default function ContadorReserva({ reservas, usuarioId, laboratorios }) {
               : 'Inicia sesión y organiza tu próxima sesión de trabajo.'}
           </p>
           <Link className="btn btn-light" to={usuarioId ? '/nueva-reserva' : '/login'}>
-            {usuarioId ? 'Crear una reserva' : 'Ingresar al portal'} <Icono nombre="arrow" size={17} />
+            {usuarioId ? 'Crear una reserva' : 'Ingresar al portal'}{' '}
+            <Icono nombre="arrow" size={17} />
           </Link>
         </>
       )}

@@ -29,7 +29,12 @@ export const api = axios.create({ baseURL: API_URL, timeout: 10000 });
 // El interceptor concentra la traducción de errores de todas las operaciones Axios.
 api.interceptors.response.use(
   (respuesta) => respuesta,
-  (error) => Promise.reject(new Error(error.response
-    ? mensajeHttp(error.response.status)
-    : 'No se pudo conectar con la API. Intenta nuevamente.')),
+  (error) =>
+    Promise.reject(
+      new Error(
+        error.response
+          ? mensajeHttp(error.response.status)
+          : 'No se pudo conectar con la API. Intenta nuevamente.',
+      ),
+    ),
 );

@@ -5,7 +5,10 @@ export default function ListaLaboratorios({ laboratorios, onLimpiar }) {
   // Renderizado condicional: una lista vacía necesita un mensaje, no tarjetas.
   if (!laboratorios.length)
     return (
-      <EstadoVacio titulo="No encontramos laboratorios" descripcion="Prueba con otra sede o cambia tu búsqueda.">
+      <EstadoVacio
+        titulo="No encontramos laboratorios"
+        descripcion="Prueba con otra sede o cambia tu búsqueda."
+      >
         {onLimpiar && (
           <button className="btn btn-outline-primary" onClick={onLimpiar}>
             Limpiar filtros
